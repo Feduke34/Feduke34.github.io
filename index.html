@@ -1,47 +1,86 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Магазин эмодзи</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TelegramShop</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
-        .container {
+        body {
+            font-weight: 200;
+            color: var(--tg-thene-text-color);
+            background: var(--tg-theme-bg-color);
+        }
+
+        #main {
             width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+            padding: 20%;
             text-align: center;
         }
 
         h1 {
-            color: #333;
+            margin-top: 50px;
+            margin-bottom: 10px;
         }
 
-        .buy-button {
-            display: inline-block;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 18px;
-            margin-top: 20px;
+        img {
+            width: 70px;
+            margin: 30px auto;
         }
 
-        .buy-button:hover {
-            background-color: #45a049;
+        p {
+            width: 350px;
+            margin: 0 auto;
         }
 
-        .emoji-list {
+        button {
+            border: 0;
+            margin-top: 50px;
+            height: 60px;
+            width: 200px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 500ms ease;
+            color: var(--tg-theme-button-color);
+            background: var(--tg-theme-button-text-color);
+        }
+
+        button:hover {
+            background: var(--tg-theme-secondary-bg-color);
+        }
+
+        #form {
             display: none;
+            text-align: center;
+        }
+
+        input {
+            width: 90%;
+            outline: none;
+            margin: 10px 5%;
+            padding: 15px 10px;
+            font-size: 14px;
+            border: 2px solid silver;
+            border-radius: 5px;
+        }
+
+        input:focus {
+            border-color: #db5d5d;
+        }
+
+        /* Стили для списка эмодзи */
+        .emoji-list {
+            display: none; /* По умолчанию скрываем список эмодзи */
             margin-top: 20px;
+            text-align: center;
         }
 
         .emoji-item {
@@ -65,82 +104,55 @@
             font-size: 16px;
             color: #333;
         }
-
-        .cart {
-            margin-top: 20px;
-            padding: 10px;
-            border: 2px dashed #4CAF50;
-            display: none;
-        }
     </style>
 </head>
 <body>
+    <div id="main">
+        <h1>Onlineshop</h1>
+        <img src="https://www.dropbox.com/scl/fi/te4ajxksdup77x7ob3bwd/special_foto.jpg?rlkey=dfh13qxjwqtyfsfanlx2ma4km&st=hosr37mw&dl=0" alt="Product Image">
+        <p>Hello, welcome to the store that makes dreams come true. Here you can buy special things for your account</p>
+        <button id="buy">Buy</button>
+    </div>
 
-<div class="container">
-    <h1>Добро пожаловать в магазин эмодзи!</h1>
-    <a href="#" class="buy-button" id="buyButton">🛒 Купить эмодзи</a>
-
+    <!-- Список эмодзи, который появится после нажатия на кнопку "Купить" -->
     <div class="emoji-list" id="emojiList">
-        <div class="emoji-item" data-price="0.01">
+        <div class="emoji-item">
             😀
             <span class="price">0.01$</span>
         </div>
-        <div class="emoji-item" data-price="0.01">
+        <div class="emoji-item">
             😍
             <span class="price">0.01$</span>
         </div>
-        <div class="emoji-item" data-price="0.01">
+        <div class="emoji-item">
             😎
             <span class="price">0.01$</span>
         </div>
-        <div class="emoji-item" data-price="0.01">
+        <div class="emoji-item">
             🤩
             <span class="price">0.01$</span>
         </div>
-        <div class="emoji-item" data-price="0.01">
+        <div class="emoji-item">
             🥳
             <span class="price">0.01$</span>
         </div>
     </div>
 
-    <div class="cart" id="cart">
-        <h2>Ваша корзина</h2>
-        <ul id="cartItems"></ul>
-        <strong>Итого: <span id="totalPrice">0</span>$</strong>
-    </div>
-</div>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-<script>
-    document.getElementById('buyButton').addEventListener('click', function(event) {
-        event.preventDefault();
-        document.getElementById('emojiList').style.display = 'block';  // Показать эмодзи после нажатия на кнопку "Купить"
-    });
+    <script>
+        // Получаем кнопку "Купить" по ID
+        const buyButton = document.getElementById('buy');
+        // Получаем блок с эмодзи
+        const emojiList = document.getElementById('emojiList');
 
-    const emojiItems = document.querySelectorAll('.emoji-item');
-    const cartItems = document.getElementById('cartItems');
-    const totalPriceEl = document.getElementById('totalPrice');
-    const cart = document.getElementById('cart');
-    let totalPrice = 0;
-
-    emojiItems.forEach(function(emojiItem) {
-        emojiItem.addEventListener('click', function() {
-            const price = parseFloat(this.getAttribute('data-price'));
-            const emoji = this.textContent.trim();
-
-            // Добавляем эмодзи в корзину
-            const li = document.createElement('li');
-            li.textContent = ${emoji} - ${price}$;
-            cartItems.appendChild(li);
-
-            // Обновляем общую цену
-            totalPrice += price;
-            totalPriceEl.textContent = totalPrice.toFixed(2);
-
-            // Показываем корзину, если она еще не видна
-            cart.style.display = 'block';
+        // Обрабатываем событие нажатия на кнопку "Купить"
+        buyButton.addEventListener('click', function() {
+            // Скрываем основной контент и показываем список эмодзи
+            document.getElementById('main').style.display = 'none'; // Скрываем основной блок
+            emojiList.style.display = 'block'; // Показываем блок с эмодзи
         });
-    });
-</script>
+    </script>
 
 </body>
 </html>
