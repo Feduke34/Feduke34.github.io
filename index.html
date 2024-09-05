@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TelegramShop</title>
     <style>
@@ -15,7 +14,7 @@
 
         body {
             font-weight: 200;
-            color: var(--tg-theme-text-color);
+            color: var(--tg-thene-text-color);
             background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
             background-size: cover;
             height: 100vh;
@@ -137,7 +136,9 @@
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }#info h3 {
+        }
+
+        #info h3 {
             margin-bottom: 10px;
             font-size: 18px;
         }
@@ -169,9 +170,10 @@
         <img src="https://www.dropbox.com/scl/fi/te4ajxksdup77x7ob3bwd/special_foto.jpg?rlkey=dfh13qxjwqtyfsfanlx2ma4km&st=hosr37mw&dl=0" alt="Product Image">
         <p>Hello, welcome to the store that makes dreams come true. Here you can buy special things for your account</p>
         <button id="buy">Buy</button>
-        <button id="infoBtn">Bot info</button>
+        <button id="infoBtn">Information about the bot</button>
     </div>
 
+    <!-- Список эмодзи -->
     <div class="emoji-list" id="emojiList">
         <div class="emoji-item" data-emoji="😀" data-price="0.01">
             😀
@@ -207,12 +209,14 @@
         </div>
     </div>
 
+    <!-- Корзина -->
     <div id="cart">
         <h3>Shopping Cart</h3>
         <ul id="cart-items"></ul>
         <div class="cart-total">Total: $<span id="totalPrice">0.00</span></div>
     </div>
 
+    <!-- Информационный блок -->
     <div id="info">
         <h3>About this bot</h3>
         <p>This bot allows users to purchase special emoji for their account for only $0.01 each. Simply press "Buy", select your favorite emoji, and add them to your cart. Your purchase will be processed instantly!</p>
@@ -222,45 +226,59 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <script>
-        const buyButton = document.getElementById('buy');
-        const emojiList = document.getElementById('emojiList');
-        const cart = document.getElementById('cart');
-        const cartItems = document.getElementById('cart-items');
-        const totalPriceElem = document.getElementById('totalPrice');
-        let totalPrice = 0;
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получаем кнопку "Buy" по ID
+            const buyButton = document.getElementById('buy');
+            // Получаем блок с эмодзи
+            const emojiList = document.getElementById('emojiList');
+            // Получаем корзину и её элементы
+            const cart = document.getElementById('cart');
+            const cartItems = document.getElementById('cart-items');
+            const totalPriceElem = document.getElementById('totalPrice');
+            let totalPrice = 0;
 
-        buyButton.addEventListener('click', function() {
-            document.getElementById('main').style.display = 'none';
-            emojiList.style.display = 'block';
-        });
+            // Обрабатываем событие нажатия на кнопку "Buy"
+            buyButton.addEventListener('click', function() {
+                // Скрываем основной контент и показываем список эмодзи
+                document.getElementById('main').style.display = 'none'; // Скрываем основной блок
+                emojiList.style.display = 'block'; // Показываем блок с эмодзи
+            });
 
-        document.querySelectorAll('.emoji-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const emoji = this.getAttribute('data-emoji');
-                const price = parseFloat(this.getAttribute('data-price'));
+            // Обрабатываем нажатие на каждое эмодзи
+            document.querySelectorAll('.emoji-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const emoji = this.getAttribute('data-emoji');
+                    const price = parseFloat(this.getAttribute('data-price'));
 
-                const listItem = document.createElement('li');listItem.textContent = ${emoji} - $${price.toFixed(2)};
-                cartItems.appendChild(listItem);
+                    // Добавляем эмодзи в корзину
+                    const listItem = document.createElement('li');
+                    listItem.textContent = ${emoji} - $${price.toFixed(2)};
+                    cartItems.appendChild(listItem);
 
-                totalPrice += price;
-                totalPriceElem.textContent = totalPrice.toFixed(2);
+                    // Обновляем общую стоимость
+                    totalPrice += price;
+                    totalPriceElem.textContent = totalPrice.toFixed(2);
 
-                cart.style.display = 'block';
+                    // Показываем корзину, если она ещё не видна
+                    cart.style.display = 'block';
+                });
+            });
+
+            // Работа с информационной кнопкой
+            const infoBtn = document.getElementById('infoBtn');
+            const info = document.getElementById('info');
+            const closeInfo = document.getElementById('closeInfo');
+
+            // Показываем блок с информацией
+            infoBtn.addEventListener('click', function() {
+                info.style.display = 'block';
+            });
+
+            // Закрываем блок с информацией
+            closeInfo.addEventListener('click', function() {
+                info.style.display = 'none';
             });
         });
-
-        const infoBtn = document.getElementById('infoBtn');
-        const info = document.getElementById('info');
-        const closeInfo = document.getElementById('closeInfo');
-
-        infoBtn.addEventListener('click', function() {
-            info.style.display = 'block';
-        });
-
-        closeInfo.addEventListener('click', function() {
-            info.style.display = 'none';
-        });
     </script>
-
 </body>
 </html>
