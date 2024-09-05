@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TelegramShop</title>
     <style>
@@ -13,197 +14,190 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
             font-weight: 200;
-            color: #000;
-            background: #ffe082; /* Красивый фон */
+            color: var(--tg-theme-text-color);
+            background: var(--tg-theme-bg-color);
         }
 
         #main {
             width: 100%;
-            padding: 10%;
+            padding: 20%;
             text-align: center;
         }
 
         h1 {
-            margin-bottom: 20px;
+            margin-top: 50px;
+            margin-bottom: 10px;
         }
 
         img {
-            width: 150px;
-            margin: 20px auto;
+            width: 70px;
+            margin: 30px auto;
         }
 
         p {
-            width: 80%;
-            margin: 0 auto 20px auto;
-            font-size: 18px;
+            width: 350px;
+            margin: 0 auto;
         }
 
         button {
             border: 0;
-            padding: 15px 30px;
+            margin-top: 50px;
+            height: 60px;
+            width: 200px;
             font-size: 20px;
+            font-weight: 500;
             cursor: pointer;
-            background-color: #ffca28;
-            color: #000;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            transition: all 500ms ease;
+            color: var(--tg-theme-button-color);
+            background: var(--tg-theme-button-text-color);
         }
 
         button:hover {
-            background-color: #ffa726;
+            background: var(--tg-theme-secondary-bg-color);
         }
 
-        #emoji-list {
+        .emoji-section {
             display: none;
             text-align: center;
         }
 
-        .emoji-item {
-            font-size: 40px;
-            margin: 10px;
-            cursor: pointer;
-        }
-
-        #cart {
+        .cart-btn {
+            display: none;
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #ffca28;
-            padding: 15px;
-            border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-        }
-
-        #cart img {
-            width: 50px;
-        }
-
-        #backButton {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 30px;
-            background: none;
+            bottom: 30px;
+            right: 30px;
+            background-color: yellow;
             border: none;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .cart-btn img {
+            width: 40px;
+            height: 40px;
+        }
+
+        #info {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: yellow;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             cursor: pointer;
         }
 
-        #cartDetails {
+        #info-text {
             display: none;
             text-align: center;
-            margin-top: 20px;
+            margin: 20px auto;
         }
 
-        #cartDetails ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        #cartDetails ul li {
-            font-size: 18px;
-            margin: 5px 0;
-        }
-
-        #cartDetails p {
-            font-size: 20px;
-            font-weight: bold;
+        .cart-section {
+            display: none;
+            text-align: center;
+            margin: 20px auto;
         }
     </style>
 </head>
 <body>
-    <div id="main">
-        <h1>Onlineshop</h1>
-        <img src="your-image-url-here" alt="Product Image">
-        <p>Hello, welcome to the store that makes dreams come true.</p>
-        <button id="buy">Buy</button>
+
+<div id="main">
+    <h1>Onlineshop</h1>
+    <img src="https://www.dropbox.com/scl/fi/te4ajxksdup77x7ob3bwd/special_foto.jpg?rlkey=dfh13qxjwqtyfsfanlx2ma4km&st=hosr37mw&dl=0" alt="Product Image">
+    <p>Hello, welcome to the store that makes dreams true.</p>
+    <button id="buy">Buy</button>
+    <button id="info">ℹ️</button>
+</div>
+
+<div id="info-text">
+    <h2>About the Bot</h2>
+    <p>This bot allows you to purchase custom emojis and add them to your cart. Simple and fun!</p>
+    <button id="back-info">Back</button>
+</div>
+
+<div class="emoji-section" id="emoji-section">
+    <h2>Select Your Emojis</h2>
+    <div>
+        😃 $0.01<br>
+        😂 $0.01<br>
+        😎 $0.01<br>
+        🥳 $0.01<br>
+        ❤️ $0.01<br>
+        ⭐ $0.01<br>
+        👑 $0.01<br>
+        🐱 $0.01<br>
     </div>
+    <button id="back">Back</button>
+</div>
 
-    <!-- Список эмодзи -->
-    <div id="emoji-list">
-        <div class="emoji-item" data-emoji="😀" data-price="0.01">😀</div>
-        <div class="emoji-item" data-emoji="😎" data-price="0.01">😎</div>
-        <div class="emoji-item" data-emoji="😍" data-price="0.01">😍</div>
-        <div class="emoji-item" data-emoji="🤩" data-price="0.01">🤩</div>
-        <div class="emoji-item" data-emoji="😂" data-price="0.01">😂</div>
-        <div class="emoji-item" data-emoji="😜" data-price="0.01">😜</div>
-        <!-- Добавьте больше эмодзи по необходимости -->
-    </div>
+<button class="cart-btn" id="cart-btn">
+    <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Cart">
+</button>
 
-    <!-- Корзина -->
-    <div id="cart">
-        <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Shopping Cart">
-    </div>
+<div class="cart-section" id="cart-section">
+    <h2>Shopping Cart</h2>
+    <p>Total: $0.00</p>
+    <button id="checkout">Checkout</button>
+    <button id="back-cart">Back</button>
+</div>
 
-    <!-- Детали корзины -->
-    <div id="cartDetails">
-        <h3>Your Cart</h3>
-        <ul id="cartItems"></ul>
-        <p>Total: $<span id="totalPrice">0.00</span></p>
-    </div>
+<script>
+    const buyButton = document.getElementById('buy');
+    const emojiSection = document.getElementById('emoji-section');
+    const cartBtn = document.getElementById('cart-btn');
+    const infoBtn = document.getElementById('info');
+    const infoText = document.getElementById('info-text');
+    const backButton = document.getElementById('back');
+    const backInfoButton = document.getElementById('back-info');
+    const cartSection = document.getElementById('cart-section');
+    const backCartButton = document.getElementById('back-cart');
 
-    <!-- Кнопка Назад -->
-    <button id="backButton" style="display: none;">←</button>
+    // Показать эмодзи при нажатии на кнопку "Buy"
+    buyButton.addEventListener('click', function () {
+        document.getElementById('main').style.display = 'none';
+        emojiSection.style.display = 'block';
+        cartBtn.style.display = 'block'; // Показать корзинку
+    });
 
-    <script>
-        const buyButton = document.getElementById('buy');
-        const emojiList = document.getElementById('emoji-list');
-        const main = document.getElementById('main');
-        const cart = document.getElementById('cart');
-        const cartDetails = document.getElementById('cartDetails');
-        const backButton = document.getElementById('backButton');
-        const cartItemsList = document.getElementById('cartItems');
-        const totalPriceElement = document.getElementById('totalPrice');
+    // Кнопка для возврата на главную страницу
+    backButton.addEventListener('click', function () {
+        emojiSection.style.display = 'none';
+        document.getElementById('main').style.display = 'block';
+        cartBtn.style.display = 'none';
+    });
 
-        let cartItems = [];
-        let totalPrice = 0;
+    // Кнопка Info для показа текста с информацией о боте
+    infoBtn.addEventListener('click', function () {
+        document.getElementById('main').style.display = 'none';
+        infoText.style.display = 'block';
+    });
 
-        // Показываем эмодзи при нажатии на кнопку "Buy"
-        buyButton.addEventListener('click', () => {
-            main.style.display = 'none';
-            emojiList.style.display = 'block';
-            cartDetails.style.display = 'block';
-            backButton.style.display = 'block';
-        });
+    // Кнопка возврата на главную с info
+    backInfoButton.addEventListener('click', function () {
+        infoText.style.display = 'none';
+        document.getElementById('main').style.display = 'block';
+    });
 
-        // Кнопка "Назад" возвращает на главную страницу
-        backButton.addEventListener('click', () => {
-            main.style.display = 'block';
-            emojiList.style.display = 'none';
-            cartDetails.style.display = 'none';
-            backButton.style.display = 'none';
-        });
+    // Показать корзину
+    cartBtn.addEventListener('click', function () {
+        emojiSection.style.display = 'none';
+        cartSection.style.display = 'block';
+    });
 
-        // Добавление эмодзи в корзину при нажатии
-        document.querySelectorAll('.emoji-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const emoji = item.getAttribute('data-emoji');
-                const price = parseFloat(item.getAttribute('data-price'));
+    // Кнопка для возврата из корзины к эмодзи
+    backCartButton.addEventListener('click', function () {
+        cartSection.style.display = 'none';
+        emojiSection.style.display = 'block';
+    });
+</script>
 
-                cartItems.push({ emoji, price });
-                totalPrice += price;
-
-                updateCart();
-            });
-        });
-
-        // Обновление содержимого корзины
-        function updateCart() {
-            cartItemsList.innerHTML = '';
-            cartItems.forEach(item => {
-                const listItem = document.createElement('li');
-                listItem.textContent = '${item.emoji} - $${item.price.toFixed(2)}';
-                cartItemsList.appendChild(listItem);
-            });
-            totalPriceElement.textContent = totalPrice.toFixed(2);
-        }
-
-        // Нажатие на иконку корзины открывает/закрывает детали корзины
-        cart.addEventListener('click', () => {
-            cartDetails.style.display = cartDetails.style.display === 'block' ? 'none' : 'block';
-        });
-    </script>
 </body>
 </html>
+    
