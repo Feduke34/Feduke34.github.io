@@ -252,7 +252,7 @@
 
                     // Добавляем эмодзи в корзину
                     const listItem = document.createElement('li');
-                    listItem.textContent = {emoji} - {pricetoFixed(2)};
+                    listItem.textContent = ${emoji} - $${price.toFixed(2)};
                     cartItems.appendChild(listItem);
 
                     // Обновляем общую стоимость
