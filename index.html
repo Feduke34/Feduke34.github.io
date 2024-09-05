@@ -65,6 +65,7 @@
             background: #feb47b;
         }
 
+        /* Стиль для кнопки "Назад" */
         #backButton {
             position: absolute;
             top: 20px;
@@ -73,29 +74,7 @@
             cursor: pointer;
             background-color: transparent;
             border: none;
-            color: #ffffff;
-        }
-
-        #cartButton {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #ff7e5f;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            color: #ffffff;
-            font-size: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        #cartButton:hover {
-            background-color: #feb47b;
+            color: #5e2916;
         }
 
         .emoji-list {
@@ -128,15 +107,18 @@
 
         #cart {
             position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 250px;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
             background-color: #ffffff;
             border: 1px solid #ccc;
             border-radius: 10px;
             padding: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             display: none;
+            text-align: center;
         }
 
         #cart h3 {
@@ -177,7 +159,7 @@
         }
 
         #info p {
-            font-size: 14px;
+            font-size: 20px;
             color: #333;
         }
 
@@ -188,8 +170,7 @@
             color: #fff;
             border: none;
             padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 5px;cursor: pointer;
         }
 
         #info button:hover {
@@ -200,13 +181,16 @@
 <body>
     <div id="main">
         <h1>Onlineshop</h1>
+        <img src="https://www.dropbox.com/scl/fi/te4ajxksdup77x7ob3bwd/special_foto.jpg?rlkey=dfh13qxjwqtyfsfanlx2ma4km&st=hosr37mw&dl=0" alt="Product Image">
         <p>Hello, welcome to the store that makes dreams come true.</p>
         <button id="buy">Buy</button>
         <button id="infoBtn">Info</button>
     </div>
 
+    <!-- Кнопка "Назад" -->
     <button id="backButton" style="display:none;">←</button>
 
+    <!-- Список эмодзи -->
     <div class="emoji-list" id="emojiList">
         <div class="emoji-item" data-emoji="😀" data-price="0.01">
             😀
@@ -242,14 +226,14 @@
         </div>
     </div>
 
+    <!-- Корзина -->
     <div id="cart">
         <h3>Shopping Cart</h3>
         <ul id="cart-items"></ul>
         <div class="cart-total">Total: $<span id="totalPrice">0.00</span></div>
     </div>
 
-    <button id="cartButton">🛒</button>
-
+    <!-- Информационный блок -->
     <div id="info">
         <h3>About this bot</h3>
         <p>This bot allows users to purchase special emoji for their account. Simply press "Buy", select your favorite emoji, and add them to your cart.</p>
@@ -258,7 +242,6 @@
 
     <script>
         const emojiList = document.getElementById('emojiList');
-        const cartButton = document.getElementById('cartButton');
         const cart = document.getElementById('cart');
         const cartItemsList = document.getElementById('cart-items');
         const totalPriceElement = document.getElementById('totalPrice');
@@ -271,20 +254,25 @@
         let cartItems = [];
         let totalPrice = 0.0;
 
+        // Показать список эмодзи при нажатии на кнопку "Buy"
         buyButton.addEventListener('click', () => {
             emojiList.style.display = 'block';
+            cart.style.display = 'block';
             backButton.style.display = 'block';
             buyButton.style.display = 'none';
             infoButton.style.display = 'none';
         });
 
+        // Кнопка "Назад" возвращает на главную страницу
         backButton.addEventListener('click', () => {
             emojiList.style.display = 'none';
+            cart.style.display = 'none';
             backButton.style.display = 'none';
             buyButton.style.display = 'block';
             infoButton.style.display = 'block';
         });
 
+        // Добавление эмодзи в корзину при нажатии
         document.querySelectorAll('.emoji-item').forEach(item => {
             item.addEventListener('click', () => {
                 const emoji = item.getAttribute('data-emoji');
@@ -297,6 +285,7 @@
             });
         });
 
+        // Обновление содержимого корзины
         function updateCart() {
             cartItemsList.innerHTML = '';
             cartItems.forEach(item => {
@@ -307,18 +296,12 @@
             totalPriceElement.textContent = totalPrice.toFixed(2);
         }
 
-        cartButton.addEventListener('click', () => {
-            if (cart.style.display === 'none') {
-                cart.style.display = 'block';
-            } else {
-                cart.style.display = 'none';
-            }
-        });
-
+        // Показать информацию о боте
         infoButton.addEventListener('click', () => {
             infoBox.style.display = 'block';
         });
 
+        // Закрыть информацию о боте
         closeInfoButton.addEventListener('click', () => {
             infoBox.style.display = 'none';
         });
