@@ -65,7 +65,6 @@
             background: #feb47b;
         }
 
-        /* Стиль для кнопки "Назад" */
         #backButton {
             position: absolute;
             top: 20px;
@@ -75,6 +74,28 @@
             background-color: transparent;
             border: none;
             color: #ffffff;
+        }
+
+        #cartButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff7e5f;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: #ffffff;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #cartButton:hover {
+            background-color: #feb47b;
         }
 
         .emoji-list {
@@ -107,9 +128,9 @@
 
         #cart {
             position: fixed;
-            bottom: 20px;
+            bottom: 80px;
             right: 20px;
-            width: 200px;
+            width: 250px;
             background-color: #ffffff;
             border: 1px solid #ccc;
             border-radius: 10px;
@@ -180,15 +201,13 @@
     <div id="main">
         <h1>Onlineshop</h1>
         <img src="https://www.dropbox.com/scl/fi/te4ajxksdup77x7ob3bwd/special_foto.jpg?rlkey=dfh13qxjwqtyfsfanlx2ma4km&st=hosr37mw&dl=0" alt="Product Image">
-        <p>Hello, welcome to the store that makes dreams come true. </p>
+        <p>Hello, welcome to the store that makes dreams come true. Here you can buy special things for your account</p>
         <button id="buy">Buy</button>
-        <button id="infoBtn">Info</button>
+        <button id="infoBtn">Information about the bot</button>
     </div>
 
-    <!-- Кнопка "Назад" -->
     <button id="backButton" style="display:none;">←</button>
 
-    <!-- Список эмодзи -->
     <div class="emoji-list" id="emojiList">
         <div class="emoji-item" data-emoji="😀" data-price="0.01">
             😀
@@ -224,89 +243,85 @@
         </div>
     </div>
 
-    <!-- Корзина -->
     <div id="cart">
         <h3>Shopping Cart</h3>
         <ul id="cart-items"></ul>
         <div class="cart-total">Total: $<span id="totalPrice">0.00</span></div>
     </div>
 
-    <!-- Информационный блок -->
+    <button id="cartButton">🛒</button>
+
     <div id="info">
         <h3>About this bot</h3>
-        <p>This bot allows users to purchase special emoji for their account for only $0.01 each. Simply press "Buy", select your favorite emoji, and add them to your cart. Your purchase will be processed instantly!</p>
+        <p>This bot allows users to purchase special emoji for their account. Simply press "Buy", select your favorite emoji, and add them to your cart.</p>
         <button id="closeInfo">Close</button>
     </div>
 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Получаем кнопку "Buy" по ID
-            const buyButton = document.getElementById('buy');
-            // Получаем блок с эмодзи
-            const emojiList = document.getElementById('emojiList');
-            // Получаем корзину и её элементы
-            const cart = document.getElementById('cart');
-            const cartItems = document.getElementById('cart-items');
-            const totalPriceElem = document.getElementById('totalPrice');
-            let totalPrice = 0;
+        const emojiList = document.getElementById('emojiList');
+        const cartButton = document.getElementById('cartButton');
+        const cart = document.getElementById('cart');
+        const cartItemsList = document.getElementById('cart-items');
+        const totalPriceElement = document.getElementById('totalPrice');
+        const backButton = document.getElementById('backButton');
+        const buyButton = document.getElementById('buy');
+        const infoButton = document.getElementById('infoBtn');
+        const infoBox = document.getElementById('info');
+        const closeInfoButton = document.getElementById('closeInfo');
 
-            // Обрабатываем событие нажатия на кнопку "Buy"
-            buyButton.addEventListener('click', function() {
-                console.log("Buy button clicked"); // Лог для проверки
-                document.getElementById('main').style.display = 'none'; // Скрываем основной блок
-                emojiList.style.display = 'block'; // Показываем блок с эмодзи
-                document.getElementById('backButton').style.display = 'block'; // Показываем кнопку "Назад"
+        let cartItems = [];
+        let totalPrice = 0.0;
+
+        buyButton.addEventListener('click', () => {
+            emojiList.style.display = 'block';
+            backButton.style.display = 'block';
+            buyButton.style.display = 'none';
+            infoButton.style.display = 'none';
+        });
+
+        backButton.addEventListener('click', () => {
+            emojiList.style.display = 'none';
+            backButton.style.display = 'none';
+            buyButton.style.display = 'block';
+            infoButton.style.display = 'block';
+        });
+
+        document.querySelectorAll('.emoji-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const emoji = item.getAttribute('data-emoji');
+                const price = parseFloat(item.getAttribute('data-price'));
+
+                cartItems.push({ emoji, price });
+                totalPrice += price;
+
+                updateCart();
             });
+        });
 
-            // Обрабатываем нажатие на каждое эмодзи
-            document.querySelectorAll('.emoji-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    const emoji = this.getAttribute('data-emoji');
-                    const price = parseFloat(this.getAttribute('data-price'));
-
-                    // Логируем нажатие на эмодзи для отладки
-                    console.log(`Emoji clicked: ${emoji}, Price: ${price}`);
-
-                    // Добавляем эмодзи в корзину
-                    const listItem = document.createElement('li');
-                    listItem.textContent = '${emoji} - $${price.toFixed(2)}';
-                    cartItems.appendChild(listItem);
-
-                    // Обновляем общую стоимость
-                    totalPrice += price;
-                    totalPriceElem.textContent = totalPrice.toFixed(2);
-
-                    // Показываем корзину, если она ещё не видна
-                    cart.style.display = 'block';
-                });
+        function updateCart() {
+            cartItemsList.innerHTML = '';
+            cartItems.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = '${item.emoji} - $${item.price.toFixed(2)}';
+                cartItemsList.appendChild(listItem);
             });
+            totalPriceElement.textContent = totalPrice.toFixed(2);
+        }
 
-            // Работа с информационной кнопкой
-            const infoBtn = document.getElementById('infoBtn');
-            const info = document.getElementById('info');
-            const closeInfo = document.getElementById('closeInfo');
+        cartButton.addEventListener('click', () => {
+            if (cart.style.display === 'none') {
+                cart.style.display = 'block';
+            } else {
+                cart.style.display = 'none';
+            }
+        });
 
-            // Показываем блок с информацией
-            infoBtn.addEventListener('click', function() {
-                console.log("Info button clicked"); // Лог для проверки
-                info.style.display = 'block';
-            });
+        infoButton.addEventListener('click', () => {
+            infoBox.style.display = 'block';
+        });
 
-            // Закрываем блок с информацией
-            closeInfo.addEventListener('click', function() {
-                info.style.display = 'none';
-            });
-
-            // Обработка кнопки "Назад"
-            const backButton = document.getElementById('backButton');
-            backButton.addEventListener('click', function() {
-                document.getElementById('main').style.display = 'block'; // Показываем основной блок
-                emojiList.style.display = 'none'; // Скрываем блок с эмодзи
-                backButton.style.display = 'none'; // Скрываем кнопку "Назад"
-                cart.style.display = 'none'; // Скрываем корзину
-            });
+        closeInfoButton.addEventListener('click', () => {
+            infoBox.style.display = 'none';
         });
     </script>
 </body>
