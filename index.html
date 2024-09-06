@@ -21,11 +21,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 10px;
         }
 
         #main {
-            width: 100%;
-            padding: 20%;
+            width: 90%;
+            padding: 10%;
             text-align: center;
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
@@ -33,32 +34,34 @@
         }
 
         h1 {
-            margin-top: 50px;
+            margin-top: 20px;
             margin-bottom: 10px;
+            font-size: 1.5em; /* Уменьшено */
         }
 
         img {
-            width: 70px;
-            margin: 30px auto;
+            width: 50px; /* Уменьшено */
+            margin: 20px auto;
         }
 
         p {
-            width: 350px;
+            width: 90%;
             margin: 0 auto;
+            font-size: 0.9em; /* Уменьшено */
         }
 
         button {
             border: 0;
-            margin-top: 20px;
-            height: 60px;
-            width: 200px;
-            font-size: 20px;
+            margin-top: 15px;
+            height: 45px; /* Уменьшено */
+            width: 150px; /* Уменьшено */
+            font-size: 16px; /* Уменьшено */
             font-weight: 500;
             cursor: pointer;
             transition: all 500ms ease;
             color: #ffffff;
             background: #ff7e5f;
-            border-radius: 30px;
+            border-radius: 25px;
         }
 
         button:hover {
@@ -67,26 +70,48 @@
 
         #backButton {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 30px;
+            top: 10px;
+            left: 10px;
+            font-size: 24px; /* Уменьшено */
             cursor: pointer;
             background-color: transparent;
             border: none;
             color: #ffffff;
         }
 
+        #cartButton {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background-color: #ff7e5f;
+            border: none;
+            border-radius: 50%;
+            width: 40px; /* Уменьшено */
+            height: 40px; /* Уменьшено */
+            color: #ffffff;
+            font-size: 20px; /* Уменьшено */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #cartButton:hover {
+            background-color: #feb47b;
+        }
+
         .emoji-list {
             display: none;
-            margin-top: 20px;
+            margin-top: 15px;
             text-align: center;
         }
 
         .emoji-item {
             display: inline-block;
-            font-size: 40px;
-            margin: 10px;
-            padding: 10px;
+            font-size: 30px; /* Уменьшено */
+            margin: 5px;
+            padding: 5px; /* Уменьшено */
             background-color: #ffffff;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -99,16 +124,16 @@
 
         .price {
             display: block;
-            margin-top: 5px;
-            font-size: 16px;
+            margin-top: 3px;
+            font-size: 14px; /* Уменьшено */
             color: #333;
         }
 
         #cart {
             position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 250px;
+            bottom: 60px;
+            right: 15px;
+            width: 200px; /* Уменьшено */
             background-color: #ffffff;
             border: 1px solid #ccc;
             border-radius: 10px;
@@ -119,7 +144,7 @@
 
         #cart h3 {
             margin-bottom: 10px;
-            font-size: 18px;
+            font-size: 16px; /* Уменьшено */
         }
 
         #cart-items {
@@ -133,17 +158,18 @@
         }
 
         .cart-total {
-            margin-top: 10px;
+            margin-top: 5px;
             font-weight: bold;
+            font-size: 14px; /* Уменьшено */
         }
 
         #info {
             display: none;
             position: fixed;
-            top: 20px;
-            left: 20px;
-            width: 300px;
-            padding: 20px;
+            top: 10px;
+            left: 10px;
+            width: 260px; /* Уменьшено */
+            padding: 15px; /* Уменьшено */
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -151,11 +177,11 @@
 
         #info h3 {
             margin-bottom: 10px;
-            font-size: 18px;
+            font-size: 16px; /* Уменьшено */
         }
 
         #info p {
-            font-size: 14px;
+            font-size: 12px; /* Уменьшено */
             color: #333;
         }
 
@@ -165,7 +191,7 @@
             background-color: #ff7e5f;
             color: #fff;
             border: none;
-            padding: 10px;
+            padding: 8px; /* Уменьшено */
             border-radius: 5px;
             cursor: pointer;
         }
@@ -250,21 +276,20 @@
         let cartItems = [];
         let totalPrice = 0.0;
 
-        // Переключение страниц (главная -> эмодзи)
         buyButton.addEventListener('click', () => {
-            document.getElementById('main').style.display = 'none'; // Скрыть главную страницу
-            emojiList.style.display = 'block'; // Показать эмодзи
-            backButton.style.display = 'block'; // Показать кнопку "назад"
+            emojiList.style.display = 'block';
+            backButton.style.display = 'block';
+            buyButton.style.display = 'none';
+            infoButton.style.display = 'none';
         });
 
-        // Возвращение на главную страницу
         backButton.addEventListener('click', () => {
             emojiList.style.display = 'none';
             backButton.style.display = 'none';
-            document.getElementById('main').style.display = 'block';
+            buyButton.style.display = 'block';
+            infoButton.style.display = 'block';
         });
 
-        // Добавление эмодзи в корзину
         document.querySelectorAll('.emoji-item').forEach(item => {
             item.addEventListener('click', () => {
                 const emoji = item.getAttribute('data-emoji');
