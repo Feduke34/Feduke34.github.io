@@ -76,28 +76,6 @@
             color: #ffffff;
         }
 
-        #cartButton {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #ff7e5f;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            color: #ffffff;
-            font-size: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        #cartButton:hover {
-            background-color: #feb47b;
-        }
-
         .emoji-list {
             display: none;
             margin-top: 20px;
@@ -272,20 +250,21 @@
         let cartItems = [];
         let totalPrice = 0.0;
 
+        // Переключение страниц (главная -> эмодзи)
         buyButton.addEventListener('click', () => {
-            emojiList.style.display = 'block';
-            backButton.style.display = 'block';
-            buyButton.style.display = 'none';
-            infoButton.style.display = 'none';
+            document.getElementById('main').style.display = 'none'; // Скрыть главную страницу
+            emojiList.style.display = 'block'; // Показать эмодзи
+            backButton.style.display = 'block'; // Показать кнопку "назад"
         });
 
+        // Возвращение на главную страницу
         backButton.addEventListener('click', () => {
             emojiList.style.display = 'none';
             backButton.style.display = 'none';
-            buyButton.style.display = 'block';
-            infoButton.style.display = 'block';
+            document.getElementById('main').style.display = 'block';
         });
 
+        // Добавление эмодзи в корзину
         document.querySelectorAll('.emoji-item').forEach(item => {
             item.addEventListener('click', () => {
                 const emoji = item.getAttribute('data-emoji');
