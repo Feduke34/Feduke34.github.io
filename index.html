@@ -24,7 +24,7 @@
             padding: 10px;
         }
 
-        #main {
+        #main, #emojiPage {
             width: 90%;
             padding: 10%;
             text-align: center;
@@ -199,6 +199,15 @@
         #info button:hover {
             background-color: #feb47b;
         }
+
+        /* Скрытие основного контента и эмодзи */
+        #emojiPage {
+            display: none;
+        }
+
+        #main.hidden, #emojiPage.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -210,40 +219,41 @@
         <button id="infoBtn">Information about the bot</button>
     </div>
 
-    <button id="backButton" style="display:none;">←</button>
-
-    <div class="emoji-list" id="emojiList">
-        <div class="emoji-item" data-emoji="😀" data-price="0.01">
-            😀
-            <span class="price">0.01$</span>
-        </div>
-        <div class="emoji-item" data-emoji="😍" data-price="0.01">
-            😍
-            <span class="price">0.01$</span>
-        </div>
-        <div class="emoji-item" data-emoji="😎" data-price="0.01">
-            😎
-            <span class="price">0.01$</span>
-        </div>
-        <div class="emoji-item" data-emoji="🤩" data-price="0.01">
-            🤩
-            <span class="price">0.01$</span>
-        </div>
-        <div class="emoji-item" data-emoji="🥳" data-price="0.01">
-            🥳
-            <span class="price">0.01$</span>
-        </div>
-        <div class="emoji-item" data-emoji="🤯" data-price="0.01">
-            🤯
-            <span class="price">0.01$</span>
-        </div>
-        <div class="emoji-item" data-emoji="😭" data-price="0.01">
-            😭
-            <span class="price">0.01$</span>
-        </div>
-        <div class="emoji-item" data-emoji="😇" data-price="0.01">
-            😇
-            <span class="price">0.01$</span>
+    <div id="emojiPage">
+        <button id="backButton">←</button>
+        <div class="emoji-list" id="emojiList">
+            <div class="emoji-item" data-emoji="😀" data-price="0.01">
+                😀
+                <span class="price">0.01$</span>
+            </div>
+            <div class="emoji-item" data-emoji="😍" data-price="0.01">
+                😍
+                <span class="price">0.01$</span>
+            </div>
+            <div class="emoji-item" data-emoji="😎" data-price="0.01">
+                😎
+                <span class="price">0.01$</span>
+            </div>
+            <div class="emoji-item" data-emoji="🤩" data-price="0.01">
+                🤩
+                <span class="price">0.01$</span>
+            </div>
+            <div class="emoji-item" data-emoji="🥳" data-price="0.01">
+                🥳
+                <span class="price">0.01$</span>
+            </div>
+            <div class="emoji-item" data-emoji="🤯" data-price="0.01">
+                🤯
+                <span class="price">0.01$</span>
+            </div>
+            <div class="emoji-item" data-emoji="😭" data-price="0.01">
+                😭
+                <span class="price">0.01$</span>
+            </div>
+            <div class="emoji-item" data-emoji="😇" data-price="0.01">
+                😇
+                <span class="price">0.01$</span>
+            </div>
         </div>
     </div>
 
@@ -256,8 +266,8 @@
     <button id="cartButton">🛒</button>
 
     <div id="info">
-        <h3>About this bot</h3>
-        <p>This bot allows users to purchase special emoji for their account. Simply press "Buy", select your favorite emoji, and add them to your cart.</p>
+        <h3>Information</h3>
+        <p>Welcome to Emoji Shop! Choose and buy your favorite emojis for a great price. Simply press "Buy", select your favorite emoji, and add them to your cart.</p>
         <button id="closeInfo">Close</button>
     </div>
 
@@ -272,22 +282,21 @@
         const infoButton = document.getElementById('infoBtn');
         const infoBox = document.getElementById('info');
         const closeInfoButton = document.getElementById('closeInfo');
+        const mainPage = document.getElementById('main');
+        const emojiPage = document.getElementById('emojiPage');
 
         let cartItems = [];
         let totalPrice = 0.0;
 
         buyButton.addEventListener('click', () => {
+            mainPage.style.display = 'none';
+            emojiPage.style.display = 'block';
             emojiList.style.display = 'block';
-            backButton.style.display = 'block';
-            buyButton.style.display = 'none';
-            infoButton.style.display = 'none';
         });
 
         backButton.addEventListener('click', () => {
-            emojiList.style.display = 'none';
-            backButton.style.display = 'none';
-            buyButton.style.display = 'block';
-            infoButton.style.display = 'block';
+            emojiPage.style.display = 'none';
+            mainPage.style.display = 'block';
         });
 
         document.querySelectorAll('.emoji-item').forEach(item => {
@@ -306,7 +315,7 @@
             cartItemsList.innerHTML = '';
             cartItems.forEach(item => {
                 const listItem = document.createElement('li');
-                listItem.textContent = '${item.emoji} - $${item.price.toFixed(2)}';
+                listItem.textContent = `${item.emoji} - $${item.price.toFixed(2)}`;
                 cartItemsList.appendChild(listItem);
             });
             totalPriceElement.textContent = totalPrice.toFixed(2);
