@@ -326,25 +326,25 @@
         // Переход к странице эмодзи
         buyButton.addEventListener('click', () => {
             mainPage.classList.add('hidden');
-            emojiPage.classList.remove('block');
+            emojiPage.classList.remove('none');
         });
 
         // Возврат на главную страницу
         backButton.addEventListener('click', () => {
             emojiPage.classList.add('hidden');
-            mainPage.classList.remove('block');
+            mainPage.classList.remove('none');
         });
 
         // Переход к странице оплаты
         makeOrderButton.addEventListener('click', () => {
             emojiPage.classList.add('hidden');
-            paymentPage.classList.remove('block');
+            paymentPage.classList.remove('none');
         });
 
         // Возврат на страницу эмодзи из оплаты
         cancelPaymentButton.addEventListener('click', () => {
             paymentPage.classList.add('hidden');
-            emojiPage.classList.remove('block');
+            emojiPage.classList.remove('none');
         });
 
         // Обработка формы оплаты (заглушка)
