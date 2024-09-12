@@ -24,7 +24,7 @@
             padding: 10px;
         }
 
-        #main, #emojiPage, #paymentPage {
+        #main, #emojiPage {
             width: 90%;
             padding: 10%;
             text-align: center;
@@ -36,26 +36,26 @@
         h1 {
             margin-top: 20px;
             margin-bottom: 10px;
-            font-size: 1.5em;
+            font-size: 1.5em; /* Уменьшено */
         }
 
         img {
-            width: 50px;
+            width: 50px; /* Уменьшено */
             margin: 20px auto;
         }
 
         p {
             width: 90%;
             margin: 0 auto;
-            font-size: 0.9em;
+            font-size: 0.9em; /* Уменьшено */
         }
 
         button {
             border: 0;
             margin-top: 15px;
-            height: 45px;
-            width: 150px;
-            font-size: 16px;
+            height: 45px; /* Уменьшено */
+            width: 150px; /* Уменьшено */
+            font-size: 16px; /* Уменьшено */
             font-weight: 500;
             cursor: pointer;
             transition: all 500ms ease;
@@ -72,7 +72,7 @@
             position: absolute;
             top: 10px;
             left: 10px;
-            font-size: 24px;
+            font-size: 24px; /* Уменьшено */
             cursor: pointer;
             background-color: transparent;
             border: none;
@@ -86,10 +86,10 @@
             background-color: #ff7e5f;
             border: none;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 40px; /* Уменьшено */
+            height: 40px; /* Уменьшено */
             color: #ffffff;
-            font-size: 20px;
+            font-size: 20px; /* Уменьшено */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -109,9 +109,9 @@
 
         .emoji-item {
             display: inline-block;
-            font-size: 30px;
+            font-size: 30px; /* Уменьшено */
             margin: 5px;
-            padding: 5px;
+            padding: 5px; /* Уменьшено */
             background-color: #ffffff;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -125,7 +125,7 @@
         .price {
             display: block;
             margin-top: 3px;
-            font-size: 14px;
+            font-size: 14px; /* Уменьшено */
             color: #333;
         }
 
@@ -133,7 +133,7 @@
             position: fixed;
             bottom: 60px;
             right: 15px;
-            width: 200px;
+            width: 200px; /* Уменьшено */
             background-color: #ffffff;
             border: 1px solid #ccc;
             border-radius: 10px;
@@ -144,7 +144,7 @@
 
         #cart h3 {
             margin-bottom: 10px;
-            font-size: 16px;
+            font-size: 16px; /* Уменьшено */
         }
 
         #cart-items {
@@ -158,9 +158,8 @@
         }
 
         .cart-total {
-            margin-top: 5px;
-            font-weight: bold;
-            font-size: 14px;
+            margin-top: 5px;font-weight: bold;
+            font-size: 14px; /* Уменьшено */
         }
 
         #info {
@@ -168,8 +167,8 @@
             position: fixed;
             top: 10px;
             left: 10px;
-            width: 260px;
-            padding: 15px;
+            width: 260px; /* Уменьшено */
+            padding: 15px; /* Уменьшено */
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -177,11 +176,11 @@
 
         #info h3 {
             margin-bottom: 10px;
-            font-size: 16px;
+            font-size: 16px; /* Уменьшено */
         }
 
         #info p {
-            font-size: 12px;
+            font-size: 12px; /* Уменьшено */
             color: #333;
         }
 
@@ -191,7 +190,7 @@
             background-color: #ff7e5f;
             color: #fff;
             border: none;
-            padding: 8px;
+            padding: 8px; /* Уменьшено */
             border-radius: 5px;
             cursor: pointer;
         }
@@ -201,41 +200,12 @@
         }
 
         /* Скрытие основного контента и эмодзи */
-        #emojiPage, #paymentPage {
+        #emojiPage {
             display: none;
         }
 
         #main.hidden, #emojiPage.hidden {
             display: none;
-        }
-
-        .payment-form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .payment-form input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .payment-form button {
-            width: 100%;
-            padding: 10px;
-            background-color: #ff7e5f;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .payment-form button:hover {
-            background-color: #feb47b;
         }
     </style>
 </head>
@@ -245,7 +215,7 @@
         <img src="https://www.dropbox.com/scl/fi/te4ajxksdup77x7ob3bwd/special_foto.jpg?rlkey=dfh13qxjwqtyfsfanlx2ma4km&st=hosr37mw&dl=0" alt="Product Image">
         <p>Hello, welcome to the store that makes dreams come true. Here you can buy special things for your account</p>
         <button id="buy">Buy</button>
-        <button id="infoBtn">Info</button>
+        <button id="infoBtn">Information about the bot</button>
     </div>
 
     <div id="emojiPage">
@@ -284,26 +254,19 @@
                 <span class="price">0.01$</span>
             </div>
         </div>
-        <button id="makeOrder">Make an order</button>
     </div>
 
-    <div id="paymentPage">
-        <h1>Payment</h1>
-        <form class="payment-form" id="paymentForm">
-            <input type="text" placeholder="Card Number" id="cardNumber" required>
-            <input type="text" placeholder="Expiration Date (MM/YY)" id="expDate" required>
-            <input type="text" placeholder="CVV" id="cvv" required>
-            <input type="text" placeholder="Telegram Wallet" id="telegramWallet" required>
-            <button type="submit">Pay</button>
-        </form>
-        <button id="cancelPayment">Cancel</button>
+    <div id="cart">
+        <h3>Shopping Cart</h3>
+        <ul id="cart-items"></ul>
+        <div class="cart-total">Total: $<span id="totalPrice">0.00</span></div>
     </div>
 
     <button id="cartButton">🛒</button>
 
     <div id="info">
-        <h3>About this bot</h3>
-        <p>This bot allows users to purchase special emoji for their account. Simply press "Buy", select your favorite emoji, and add them to your cart.</p>
+        <h3>Information</h3>
+        <p>Welcome to Emoji Shop! Choose and buy your favorite emojis for a great price. Simply press "Buy", select your favorite emoji, and add them to your cart.</p>
         <button id="closeInfo">Close</button>
     </div>
 
@@ -311,6 +274,8 @@
         const emojiList = document.getElementById('emojiList');
         const cartButton = document.getElementById('cartButton');
         const cart = document.getElementById('cart');
+        const cartItemsList = document.getElementById('cart-items');
+        const totalPriceElement = document.getElementById('totalPrice');
         const backButton = document.getElementById('backButton');
         const buyButton = document.getElementById('buy');
         const infoButton = document.getElementById('infoBtn');
@@ -318,54 +283,57 @@
         const closeInfoButton = document.getElementById('closeInfo');
         const mainPage = document.getElementById('main');
         const emojiPage = document.getElementById('emojiPage');
-        const paymentPage = document.getElementById('paymentPage');
-        const makeOrderButton = document.getElementById('makeOrder');
-        const cancelPaymentButton = document.getElementById('cancelPayment');
-        const paymentForm = document.getElementById('paymentForm');
 
-        // Переход к странице эмодзи
+        let cartItems = [];
+        let totalPrice = 0.0;
+
         buyButton.addEventListener('click', () => {
-            mainPage.classList.add('hidden');
-            emojiPage.classList.remove('none');
+            mainPage.style.display = 'none';
+            emojiPage.style.display = 'block';
+            emojiList.style.display = 'block';
         });
 
-        // Возврат на главную страницу
         backButton.addEventListener('click', () => {
-            emojiPage.classList.add('hidden');
-            mainPage.classList.remove('none');
+            emojiPage.style.display = 'none';
+            mainPage.style.display = 'block';
         });
 
-        // Переход к странице оплаты
-        makeOrderButton.addEventListener('click', () => {
-            emojiPage.classList.add('hidden');
-            paymentPage.classList.remove('none');
+        document.querySelectorAll('.emoji-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const emoji = item.getAttribute('data-emoji');
+                const price = parseFloat(item.getAttribute('data-price'));
+
+                cartItems.push({ emoji, price });
+                totalPrice += price;
+
+                updateCart();
+            });
         });
 
-        // Возврат на страницу эмодзи из оплаты
-        cancelPaymentButton.addEventListener('click', () => {
-            paymentPage.classList.add('hidden');
-            emojiPage.classList.remove('none');
+        function updateCart() {
+            cartItemsList.innerHTML = '';
+            cartItems.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = ${item.emoji} - $${item.price.toFixed(2)};
+                cartItemsList.appendChild(listItem);
+            });
+            totalPriceElement.textContent = totalPrice.toFixed(2);
+        }
+
+        cartButton.addEventListener('click', () => {
+            if (cart.style.display === 'none') {
+                cart.style.display = 'block';
+            } else {
+                cart.style.display = 'none';
+            }
         });
 
-        // Обработка формы оплаты (заглушка)
-        paymentForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            alert('Payment successful!');
-            paymentPage.classList.add('hidden');
-            mainPage.classList.remove('hidden');
-        });
-
-        // Открытие и закрытие информации
         infoButton.addEventListener('click', () => {
             infoBox.style.display = 'block';
         });
 
         closeInfoButton.addEventListener('click', () => {
             infoBox.style.display = 'none';
-        });
-
-        cartButton.addEventListener('click', () => {
-            cart.style.display = cart.style.display === 'none' ? 'block' : 'none';
         });
     </script>
 </body>
