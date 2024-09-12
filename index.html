@@ -314,7 +314,7 @@
             cartItemsList.innerHTML = '';
             cartItems.forEach(item => {
                 const listItem = document.createElement('li');
-                listItem.textContent = ${item.emoji} - $${item.price.toFixed(2)};
+                listItem.textContent = "${item.emoji} - $${item.price.toFixed(2)}";
                 cartItemsList.appendChild(listItem);
             });
             totalPriceElement.textContent = totalPrice.toFixed(2);
