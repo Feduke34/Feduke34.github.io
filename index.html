@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>TelegramShop</title>
+    <title>Valentine's Page</title>
     <style>
+        /* Общие стили */
         * {
             margin: 0;
             padding: 0;
@@ -13,125 +13,172 @@
         }
 
         body {
-            font-weight: 200;
-            color: var(--tg-theme-text-color);
-            background-color: #ffb6c1; /* Один розовый фон */
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* Чтобы сердечки не создавали скролл */
+            flex-direction: column;
             position: relative;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            transition: background 0.5s;
         }
 
-        #main, #emojiPage, #errorPage {
-            width: 90%;
-            padding: 10%;
-            text-align: center;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            position: relative;
-            z-index: 2;
+        /* Главная страница */
+        #main-screen {
+            background-color: #ffccd5;
+            width: 100%
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            width: 100%;
         }
 
         h1 {
+            font-size: 2em;
+            color: #d63384;
+        }
+
+        .buttons {
             margin-top: 20px;
-            margin-bottom: 10px;
-            font-size: 1.5em;
         }
 
         button {
-            border: 0;
-            margin-top: 15px;
-            height: 45px;
-            width: 150px;
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 500ms ease;
-            color: #ffffff;
-            background: #ff7e5f;
-            border-radius: 25px;
         }
 
-        button:hover {
-            background: #feb47b;
-        }
-
-        #errorPage {
-            background-color: rgba(0, 0, 0, 0.8);
+        #yes {
+            background-color: #ff4d6d;
             color: white;
         }
 
-        /* Анимация падающих сердечек */
+        #no {
+            background-color: black;
+            color: white;
+        }
+
+        /* Сердечки */
         .heart {
             position: absolute;
-            color: red;
             font-size: 24px;
+            color: red;
             animation: fall linear infinite;
         }
 
         @keyframes fall {
-            0% {
-                transform: translateY(-100vh);
+            from {
+                transform: translateY(-10%);
                 opacity: 1;
             }
-            100% {
+            to {
                 transform: translateY(100vh);
                 opacity: 0;
             }
         }
+
+        /* Страница "Да" */
+        #yes-screen {
+            display: none;
+            background-color: #ffccd5;
+            width: 100%;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: absolute;
+        }
+
+        /* Страница 404 */
+        #error-screen {
+            display: none;
+            background-color: black;
+            color: white;
+            width: 100%;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: absolute;
+        }
+
+        #error-screen h1, #error-screen p {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <div id="main">
-        <h1>Welcome to the Store</h1>
-        <button id="yesBtn">Yes</button>
-        <button id="noBtn">No</button>
+
+    <!-- Главный экран -->
+    <div id="main-screen">
+        <h1>Ты согласна?</h1>
+        <div class="buttons">
+            <button id="yes">Да</button>
+            <button id="no">Нет</button>
+        </div>
     </div>
 
-    <div id="emojiPage" style="display:none;">
-        <h1>New Page Content</h1>
-        <p>This is the content that appears when you press "Yes".</p>
+    <!-- Экран "Да" -->
+    <div id="yes-screen">
+        <h1>Спасибо! ❤️</h1>
     </div>
 
-    <div id="errorPage" style="display:none;">
-        <h1>Error 404: Page Not Found</h1>
-        <p>The page you are looking for doesn't exist.</p>
+    <!-- Ошибка 404 -->
+    <div id="error-screen">
+        <h1>Ошибка 404</h1>
+        <p>Ты отказалась... и теперь здесь пустота :(</p>
     </div>
 
     <script>
-        const yesButton = document.getElementById('yesBtn');
-        const noButton = document.getElementById('noBtn');
-        const mainPage = document.getElementById('main');
-        const emojiPage = document.getElementById('emojiPage');
-        const errorPage = document.getElementById('errorPage');
+        // Функция для переключения экранов
+        function showScreen(screenId) {
+            document.getElementById("main-screen").style.display = "none";
+            document.getElementById("yes-screen").style.display = "none";
+            document.getElementById("error-screen").style.display = "none";
 
-        yesButton.addEventListener('click', () => {
-            mainPage.style.display = 'none';
-            emojiPage.style.display = 'block';
+            document.getElementById(screenId).style.display = "flex";
+        }
+
+        // Обработчики кнопок
+        document.getElementById("yes").addEventListener("click", function () {
+            showScreen("yes-screen");
+            startHearts();
         });
 
-        noButton.addEventListener('click', () => {
-            mainPage.style.display = 'none';
-            errorPage.style.display = 'block';
+        document.getElementById("no").addEventListener("click", function () {
+            showScreen("error-screen");
         });
 
+        // Функция создания падающих сердечек
         function createHeart() {
             const heart = document.createElement("div");
-            heart.classList.add("heart");
-            heart.innerHTML = "❤️";
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = Math.random() * 2 + 3 + "s"; // Разное время падения
+            heart.innerHTML = "❤️";heart.classList.add("heart");
             document.body.appendChild(heart);
+
+            const size = Math.random() * 20 + 10;
+            heart.style.fontSize = size + "px";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
 
             setTimeout(() => {
                 heart.remove();
             }, 5000);
         }
 
-        setInterval(createHeart, 300);
+        // Запускаем сердечки только на нужных экранах
+        function startHearts() {
+            setInterval(createHeart, 300);
+        }
+
+        // Запуск сердечек на главном экране
+        startHearts();
     </script>
 </body>
 </html>
