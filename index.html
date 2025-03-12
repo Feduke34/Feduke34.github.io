@@ -2,10 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Page</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TelegramShop</title>
     <style>
-        /* Общие стили */
         * {
             margin: 0;
             padding: 0;
@@ -13,177 +21,329 @@
         }
 
         body {
+            font-weight: 200;
+            color: var(--tg-theme-text-color);
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            background-size: cover;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-            transition: background 0.5s;
+            padding: 10px;
         }
 
-        /* Главная страница */
-        #main-screen {
- background-color: #ffb6c1;
-            width: 100%
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: absolute;
+        #main, #emojiPage {
+            width: 90%;
+            padding: 10%;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         h1 {
-            font-size: 2em;
-            color: #d63384;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.5em; /* Уменьшено */
         }
 
-        .buttons {
-            margin-top: 20px;
+        img {
+            width: 50px; /* Уменьшено */
+            margin: 20px auto;
+        }
+
+        p {
+            width: 90%;
+            margin: 0 auto;
+            font-size: 0.9em; /* Уменьшено */
         }
 
         button {
-            font-size: 18px;
-            padding: 10px 20px;
-            margin: 10px;
+            border: 0;
+            margin-top: 15px;
+            height: 45px; /* Уменьшено */
+            width: 150px; /* Уменьшено */
+            font-size: 16px; /* Уменьшено */
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 500ms ease;
+            color: #ffffff;
+            background: #ff7e5f;
+            border-radius: 25px;
+        }
+
+        button:hover {
+            background: #feb47b;
+        }
+
+        #backButton {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 24px; /* Уменьшено */
+            cursor: pointer;
+            background-color: transparent;
             border: none;
+            color: #ffffff;
+        }
+
+        #cartButton {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background-color: #ff7e5f;
+            border: none;
+            border-radius: 50%;
+            width: 40px; /* Уменьшено */
+            height: 40px; /* Уменьшено */
+            color: #ffffff;
+            font-size: 20px; /* Уменьшено */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #cartButton:hover {
+            background-color: #feb47b;
+        }
+
+        .emoji-list {
+            display: none;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .emoji-item {
+            display: inline-block;
+            font-size: 30px; /* Уменьшено */
+            margin: 5px;
+            padding: 5px; /* Уменьшено */
+            background-color: #ffffff;
+            border: 1px solid #ccc;
             border-radius: 5px;
             cursor: pointer;
         }
 
-        #yes {
-            background-color: #ff4d6d;
-            color: white;
+        .emoji-item:hover {
+            background-color: #f0f0f0;
         }
 
-        #no {
-            background-color: black;
-            color: white;
+        .price {
+            display: block;
+            margin-top: 3px;
+            font-size: 14px; /* Уменьшено */
+            color: #333;
         }
 
-        /* Сердечки */
-        .heart {
-            position: absolute;
-            top: 0;
-            font-size: 24px;
-            color: red;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            from {
-                transform: translateY(-10%);
-                opacity: 1;
-            }
-            to {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
-        }
-
-        /* Страница "Да" */
-        #yes-screen {
+        #cart {
+            position: fixed;
+            bottom: 60px;
+            right: 15px;
+            width: 200px; /* Уменьшено */
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             display: none;
-            background-color: #ffccd5;
-            width: 100%;
-            height: 100vh;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            position: absolute;
         }
 
-        /* Страница 404 */
-        #error-screen {
+        #cart h3 {
+            margin-bottom: 10px;
+            font-size: 16px; /* Уменьшено */
+        }
+
+        #cart-items {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #cart-items li {
+            margin-bottom: 5px;
+        }
+
+        .cart-total {
+            margin-top: 5px;font-weight: bold;
+            font-size: 14px; /* Уменьшено */
+        }
+
+        #info {
             display: none;
-            background-color: black;
-            color: white;
-            width: 100%;
-            height: 100vh;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            position: absolute;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 260px; /* Уменьшено */
+            padding: 15px; /* Уменьшено */
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        #error-screen h1, #error-screen p {
-            text-align: center;
+        #info h3 {
+            margin-bottom: 10px;
+            font-size: 16px; /* Уменьшено */
+        }
+
+        #info p {
+            font-size: 12px; /* Уменьшено */
+            color: #333;
+        }
+
+        #info button {
+            margin-top: 10px;
+            width: 100%;
+            background-color: #ff7e5f;
+            color: #fff;
+            border: none;
+            padding: 8px; /* Уменьшено */
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #info button:hover {
+            background-color: #feb47b;
+        }
+
+        /* Скрытие основного контента и эмодзи */
+        #emojiPage {
+            display: none;
+        }
+
+        #main.hidden, #emojiPage.hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
+    <div id="main">
+        <h1>Onlineshop</h1>
+        <img src="https://www.dropbox.com/scl/fi/te4ajxksdup77x7ob3bwd/special_foto.jpg?rlkey=dfh13qxjwqtyfsfanlx2ma4km&st=hosr37mw&dl=0" alt="Product Image">
+        <p>Hello, welcome to the store that makes dreams come true. Here you can buy special things for your account</p>
+        <button id="buy">Buy</button>
+        <button id="infoBtn">Information about the bot</button>
+    </div>
 
-    <!-- Главный экран -->
-    <div id="main-screen">
-        <h1>Ты станешь моей валентинкой?</h1>
-        <div class="buttons">
-            <button id="yes">Да</button>
-            <button id="no">Нет</button>
+    <div id="emojiPage">
+        <button id="backButton">←</button>
+        <div class="emoji-list" id="emojiList">
+            <div class="emoji-item" data-emoji="😀" data-price="0.01">
+                😀
+                <span class="price">0.01$</span>
+            </div>
+            <div class="emoji-item" data-emoji="😍" data-price="0.01">
+                😍
+                <span class="price">0.01$</span>
+            </div>
+            <div class="emoji-item" data-emoji="😎" data-price="0.01">
+                😎
+                <span class="price">0.01$</span>
+            </div>
+            <div class="emoji-item" data-emoji="🤩" data-price="0.01">
+                🤩
+                <span class="price">0.01$</span>
+            </div>
+            <div class="emoji-item" data-emoji="🥳" data-price="0.01">
+                🥳
+                <span class="price">0.01$</span>
+            </div>
+            <div class="emoji-item" data-emoji="🤯" data-price="0.01">
+                🤯
+                <span class="price">0.01$</span>
+            </div>
+            <div class="emoji-item" data-emoji="😭" data-price="0.01">
+                😭
+                <span class="price">0.01$</span>
+            </div>
+            <div class="emoji-item" data-emoji="😇" data-price="0.01">
+                😇
+                <span class="price">0.01$</span>
+            </div>
         </div>
     </div>
 
-    <!-- Экран "Да" -->
-    <div id="yes-screen">
-        <h1>Я люблю тебя очень сильно!❤️</h1>
-        <h1>Ты самое прекрасное что со мной случилось!</h1>
-        <h1>Спасибо что ты у меня есть, это онлайн валентинка сделана специально для тебя!❤️</h1>
+    <div id="cart">
+        <h3>Shopping Cart</h3>
+        <ul id="cart-items"></ul>
+        <div class="cart-total">Total: $<span id="totalPrice">0.00</span></div>
     </div>
 
-    <!-- Ошибка 404 -->
-    <div id="error-screen">
-        <h1>Ошибка 404</h1>
-        <p>Если ты отказалась то надеюсь ты просто проверила работает ли это кнопка.</p>
-        <p>Если нет то... ты разбила мое сердце</p>
+    <button id="cartButton">🛒</button>
+
+    <div id="info">
+        <h3>Information</h3>
+        <p>Welcome to Emoji Shop! Choose and buy your favorite emojis for a great price. Simply press "Buy", select your favorite emoji, and add them to your cart.</p>
+        <button id="closeInfo">Close</button>
     </div>
 
     <script>
-        // Функция для переключения экранов
-        function showScreen(screenId) {
-            document.getElementById("main-screen").style.display = "none";
-            document.getElementById("yes-screen").style.display = "none";
-            document.getElementById("error-screen").style.display = "none";
+        const emojiList = document.getElementById('emojiList');
+        const cartButton = document.getElementById('cartButton');
+        const cart = document.getElementById('cart');
+        const cartItemsList = document.getElementById('cart-items');
+        const totalPriceElement = document.getElementById('totalPrice');
+        const backButton = document.getElementById('backButton');
+        const buyButton = document.getElementById('buy');
+        const infoButton = document.getElementById('infoBtn');
+        const infoBox = document.getElementById('info');
+        const closeInfoButton = document.getElementById('closeInfo');
+        const mainPage = document.getElementById('main');
+        const emojiPage = document.getElementById('emojiPage');
 
-            document.getElementById(screenId).style.display = "flex";
-        }
+        let cartItems = [];
+        let totalPrice = 0.0;
 
-        // Обработчики кнопок
-        document.getElementById("yes").addEventListener("click", function () {
-            showScreen("yes-screen");
-            startHearts();
+        buyButton.addEventListener('click', () => {
+            mainPage.style.display = 'none';
+            emojiPage.style.display = 'block';
+            emojiList.style.display = 'block';
         });
 
-        document.getElementById("no").addEventListener("click", function () {
-            showScreen("error-screen");
+        backButton.addEventListener('click', () => {
+            emojiPage.style.display = 'none';
+            mainPage.style.display = 'block';
         });
 
-        // Функция создания падающих сердечек
-        function createHeart() {
-            const heart = document.createElement("div");
-            heart.innerHTML = "❤️";heart.classList.add("heart");
-            document.body.appendChild(heart);
+        document.querySelectorAll('.emoji-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const emoji = item.getAttribute('data-emoji');
+                const price = parseFloat(item.getAttribute('data-price'));
 
-            const size = Math.random() * 20 + 10;
-            heart.style.fontSize = size + "px";
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+                cartItems.push({ emoji, price });
+                totalPrice += price;
 
-            heart.style.top="-10px"
+                updateCart();
+            });
+        });
 
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
+        function updateCart() {
+            cartItemsList.innerHTML = '';
+            cartItems.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = "${item.emoji} - $${item.price.toFixed(2)}";
+                cartItemsList.appendChild(listItem);
+            });
+            totalPriceElement.textContent = totalPrice.toFixed(2);
         }
 
-        // Запускаем сердечки только на нужных экранах
-        function startHearts() {
-            setInterval(createHeart, 300);
-        }
+        cartButton.addEventListener('click', () => {
+            if (cart.style.display === 'none') {
+                cart.style.display = 'block';
+            } else {
+                cart.style.display = 'none';
+            }
+        });
 
-        // Запуск сердечек на главном экране
-        startHearts();
+        infoButton.addEventListener('click', () => {
+            infoBox.style.display = 'block';
+        });
+
+        closeInfoButton.addEventListener('click', () => {
+            infoBox.style.display = 'none';
+        });
     </script>
 </body>
+</html>
 </html>
